@@ -83,7 +83,7 @@ const validateEmail = (input: string) => {
             class="py-2 w-full px-2"
             :class="isValid ? 'bg-white' : ' bg-red-200 border-red-500'"
             :value="text"
-            @input="(event) => (text = event.target?.value)"
+            @input="(event) => (text = (event.target as HTMLInputElement)?.value)"
           />
         </div>
 
