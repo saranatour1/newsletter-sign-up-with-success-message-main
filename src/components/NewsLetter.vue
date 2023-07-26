@@ -44,14 +44,16 @@ const validateEmail = (input: string) => {
 <template>
   <!-- This is our Larger pot, Containes two components -->
   <div v-if="!isValid" class="bg-white w-full mx-auto my-0 card">
-  <div class="h-72 m-0">
-    <img
-      :src="`/src/assets/illustration-sign-up-${ isLarge ? 'desktop' : 'mobile'}.svg`"
-      class="h-full object-contain"
-    />
-  </div>
+    <div class="container" style="display: flex; justify-content: center; align-items: center;">
+  <img
+    v-bind:src="`src/assets/illustration-sign-up-${isLarge ? 'desktop' : 'mobile'}.svg`"
+    class="h-full object-contain"
+    alt="sign up illustration"
+  />
+</div>
 
-  <div class="stay-updated">
+
+  <div class="stay-updated p-5">
     <h1 class="my-5 text-4xl leading-none font-extrabold">Stay updated!</h1>
     <p class="-tracking-tight my-2">
       Join 60,000+ product managers receiving monthly updates on:
