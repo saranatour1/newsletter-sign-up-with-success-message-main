@@ -46,10 +46,18 @@ const validateEmail = (input: string) => {
   <div v-if="!isValid" class="bg-white w-full mx-auto my-0 card">
     <div class="container" style="display: flex; justify-content: center; align-items: center;">
   <img
-    v-bind:src="`src/assets/illustration-sign-up-${isLarge ? 'desktop' : 'mobile'}.svg`"
+    v-if="isLarge"
+    src="src/assets/illustration-sign-up-desktop.svg"
     class="h-full object-contain"
     alt="sign up illustration"
   />
+  <img
+    v-else
+    src="src/assets/illustration-sign-up-mobile.svg"
+    class="h-full object-contain"
+    alt="sign up illustration"
+  />
+
 </div>
 
 
@@ -145,7 +153,7 @@ const validateEmail = (input: string) => {
   }
   .card{
     max-height: fit-content;
-    max-width: 600px;
+    max-width: 700px;
     padding: 20px;
     border: 1px solid hsl(231, 7%, 60%);
     background-color: hsl(0, 0%, 100%);
