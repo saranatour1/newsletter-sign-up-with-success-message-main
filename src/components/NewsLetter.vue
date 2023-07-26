@@ -47,13 +47,13 @@ const validateEmail = (input: string) => {
     <div class="container" style="display: flex; justify-content: center; align-items: center;">
   <img
     v-if="isLarge"
-    src="src/assets/illustration-sign-up-desktop.svg"
+    src="/src/assets/illustration-sign-up-desktop.svg"
     class="h-full object-contain"
     alt="sign up illustration"
   />
   <img
     v-else
-    src="src/assets/illustration-sign-up-mobile.svg"
+    src="/src/assets/illustration-sign-up-mobile.svg"
     class="h-full object-contain"
     alt="sign up illustration"
   />
