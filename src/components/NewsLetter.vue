@@ -132,7 +132,7 @@ const validateEmail = (input: string) => {
 <style>
 /** Desktop Media Query */
 /* Styles for screens between 600px and 1440px */
-@media (min-width: 600px) and (max-width: 1440px) {
+@media (min-width: 600px) and (max-width: 1840px) {
   body{
     background:hsl(234, 29%, 20%);
     /* height: 100vh; */
