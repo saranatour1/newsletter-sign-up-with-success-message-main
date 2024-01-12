@@ -44,6 +44,7 @@ const refreshPage = () => {
     justify-around
      p-6 bg-white gap-x-16  rounded-[40px] max-sm:h-screen max-sm:w-screen max-sm:flex-col max-sm:p-0 max-sm:gap-x-0
       max-sm:justify-start max-sm:items-center
+      max-sm:rounded-none
      ">
 
     <picture class=" max-sm:mx-auto">
