@@ -1,219 +1,125 @@
 <script setup lang="ts">
-// import StayUpdated from './NewsLetterComponents/StayUpdated.vue';
 import { ref, onMounted } from 'vue';
 
-
-// import { ref } from 'vue';
 const stayUpdatedText: string[] = [
   "Product discovery and building what matters",
   "Measuring to ensure updates are a success",
   "And much more!",
 ];
 
-let isValid = ref(false);
-let errMsg = ref("");
-let text = ref("");
-let emailVal = ref("");
-let isLarge = ref(true);
-
-onMounted(() => {
-  window.addEventListener('resize', () => {
-    isLarge.value = window.innerWidth >= 376;
-  });
-
-})
-
-
-console.log(text.value);
+const isValid = ref<boolean | null>(null);
+const errMsg = ref("");
+const text = ref("");
+const emailVal = ref("");
 const emailRegEx = ref(/^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/);
 
+const nextStep = ref(false);
+
 const validateEmail = (input: string) => {
+  if (input.trim() === "") {
+    isValid.value = null; // Reset validation state for empty input
+    return (errMsg.value = ""); // Reset error message for empty input
+  }
   if (input.match(emailRegEx.value)) {
     isValid.value = true;
-    emailVal.value = text.value;
-
-    return (text.value = "");
   } else {
     isValid.value = false;
     return (errMsg.value = "Valid Email required");
   }
-
-  // pass items from child to parent
 };
+
+const goToNextStep = () => {
+  if (isValid.value && isValid.value !== null) {
+    nextStep.value = true;
+  } else {
+    nextStep.value = false;
+  }
+}
+
+
 </script>
 <template>
-  <!-- This is our Larger pot, Containes two components -->
-  <div v-if="!isValid" class="bg-white w-full mx-auto my-0 card">
-    <div class="container" style="display: flex; justify-content: center; align-items: center;">
-  <img
-    v-if="isLarge"
-    src="/src/assets/illustration-sign-up-desktop.svg"
-    class="h-full object-contain"
-    alt="sign up illustration"
-  />
-  <img
-    v-else
-    src="/src/assets/illustration-sign-up-mobile.svg"
-    class="h-full object-contain"
-    alt="sign up illustration"
-  />
+  <div v-if="!nextStep"
+    class="w-[58.375rem] h-[40.063rem] flex flex-row-reverse items-center justify-around p-6 bg-white gap-x-16  rounded-[40px] max-md:h-screen md:w-full max-md:flex-col">
 
-</div>
+    <picture>
+      <source srcset="/src/assets/illustration-sign-up-mobile.svg" media="(max-width: 600px)" />
+      <img src="/src/assets/illustration-sign-up-desktop.svg" alt="MDN" />
+    </picture>
 
 
-  <div class="stay-updated p-5">
-    <h1 class="my-5 text-4xl leading-none font-extrabold">Stay updated!</h1>
-    <p class="-tracking-tight my-2">
-      Join 60,000+ product managers receiving monthly updates on:
-    </p>
 
-    <table class="table-fixed">
-      <tbody>
-        <tr class="my-1" v-for="(message, index) in stayUpdatedText" :key="index">
-          <td class="px-0 py-1">
-            <img
-              src="/src/assets/icon-list.svg"
-              alt="icons list"
-              class="mr-2"
-            />
-          </td>
-          <td class="px-2 py-1">{{ message }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <form @submit="(event) => event.preventDefault()">
-      <div class="mb-3 flex flex-col">
-        <label for="email" class="text-xs font-extrabold mt-3">
-          <div class="inline-flex justify-between">
-            <span class="mr-10"> Email address </span>
-            <span v-if="isValid" class="text-red-300">{{ errMsg }}</span>
-            <span v-else> </span>
-          </div>
-        </label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          placeholder="email@company.com"
-          class="py-2 w-full px-2"
-          :class="isValid ? 'bg-white' : ' bg-red-200 border-red-500'"
-          :value="text"
-          @input="(event) => (text = (event.target as HTMLInputElement)?.value)"
-        />
-      </div>
-
-      <button
-        @click="validateEmail(text)"
-        class="text-white text-center w-full py-2 px-2 rounded-lg my-2"
-      >
-        Subscribe to monthly newsletter
-      </button>
-    </form>
-  </div>
-</div>
-
-<div v-if="isValid" class="flex justify-center items-center bg-white p-10 card lg:flex lg:justify-center lg:items-center">
-  <div class="container flex flex-col justify-around h-full">
-    <div class=" sm:mt-24 flex-grow">
-      <img src="/src/assets/icon-success.svg" alt="success icon" class="my-2"/>
-      <h1 class="my-5 text-4xl leading-none font-extrabold">
-        Thanks for subscribing!
-      </h1>
-      <p>
-        A confirmation email has been sent to
-        <span class="font-extrabold">{{ emailVal }}</span>. Please open it
-        and click the button inside to confirm your subscription.
+    <div class=" p-5 inline-flex flex-col justify-around items-start">
+      <h1 class=" text-6xl text-gray-1000 font-roboto font-bold my-1 tracking-normal">Stay updated!</h1>
+      <p class="-tracking-tight my-2 font-roboto text-base line-clamp-2 font-normal">
+        Join 60,000+ product managers receiving monthly updates on:
       </p>
-    </div>
-    <div>
-      <button
-        id="dis"
-        class="text-white text-center w-full py-2 px-2 rounded-lg my-2"
-        @click="isValid=!isValid"
-      >
-        Dismiss message
-      </button>
+
+      <table class="table-fixed">
+        <tbody>
+          <tr class="my-1" v-for="(message, index) in stayUpdatedText" :key="index">
+            <td class="px-0 py-1">
+              <img src="/src/assets/icon-list.svg" alt="icons list" class="mr-2" />
+            </td>
+            <td class="px-2 py-1 font-roboto text-gray-970 text-base">{{ message }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <form @submit.prevent class=" w-full">
+        <div class="mb-3 flex flex-col w-full">
+          <label for="email" class="text-xs font-extrabold mt-3 font-roboto text-gray-970">
+            <div class="inline-flex justify-between">
+              <span class="mr-10 font-roboto text-gray-970 font-bold mb-1"> Email address </span>
+              <span class="mr-10 font-roboto  font-bold mb-1 text-red-300 self-end" v-if="!isValid">{{ errMsg }}</span>
+              <span v-else> </span>
+            </div>
+          </label>
+          <input type="email" name="email" id="email" placeholder="email@company.com" @submit.prevent
+            class="bg-white indent-2 text-gray-970 h-12 w-full outline-none font-roboto rounded-lg p-0 border-gray-970  focus:border-black focus:outline-black"
+            :class="isValid ? 'bg-white' : ' border-red-tomato bg-red-tomato/25  focus:outline-red-tomato text-red-tomato'"
+            @input="validateEmail(text)" v-model="text" />
+        </div>
+
+        <button @click="goToNextStep"
+          class=" w-full h-14 bg-gray-1000 flex items-center justify-center text-white font-roboto font-bold rounded-lg mt-2 hover:bg">
+          Subscribe to monthly newsletter
+        </button>
+      </form>
     </div>
   </div>
-</div>
 
+
+
+  <div v-if="nextStep"
+    class="flex justify-center items-center bg-white p-10 card lg:flex lg:justify-center lg:items-center">
+    <div class="container flex flex-col justify-around h-full">
+      <div class=" sm:mt-24 flex-grow">
+        <img src="/src/assets/icon-success.svg" alt="success icon" class="my-2" />
+        <h1 class="my-5 text-4xl leading-none font-extrabold">
+          Thanks for subscribing!
+        </h1>
+        <p>
+          A confirmation email has been sent to
+          <span class="font-extrabold">{{ emailVal }}</span>. Please open it
+          and click the button inside to confirm your subscription.
+        </p>
+      </div>
+      <div>
+        <button id="dis" class="text-white text-center w-full py-2 px-2 rounded-lg my-2" @click="isValid = !isValid">
+          Dismiss message
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
-<style>
-/** Desktop Media Query */
-/* Styles for screens between 600px and 1440px */
-@media (min-width: 600px) and (max-width: 1840px) {
-  body{
-    background:hsl(234, 29%, 20%);
-    /* height: 100vh; */
-    display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-  }
-  .card{
-    max-height: fit-content;
-    max-width: 700px;
-    padding: 20px;
-    border: 1px solid hsl(231, 7%, 60%);
-    background-color: hsl(0, 0%, 100%);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-  }
-
-  .card:first-of-type{
-    display: flex;
-    flex-direction: row-reverse;
-  }
-  .h-72.m-0 > img{
-    padding: 5px;
-    height: fit-content;
-    object-fit: contain;
-  }
-}
-
-
-/**Mobile Media Query */
-
-
-@media (max-width: 375px) {
-  body {
-    overflow-x: hidden;
-  }
-  div.bg-white.w-full.mx-auto.my-0 , div.flex.justify-center.items-center.bg-white.p-10{
-    height: 100vh;
-  }
-
-  .stay-updated {
-    width: 90vw;
-    /* height: 100vh; */
-    margin: 0 auto;
-  }
-
-}
-td,
-p,
-label {
-  color: hsl(235, 18%, 26%);
-}
-
-input[type="email"] {
-  color: hsl(235, 18%, 26%);
-  border-radius: 7px;
-  text-indent: 2px;
-  border: 1px solid hsl(231, 7%, 60%);
-}
-
-input[type="email"]:focus {
-  border: 1px solid hsl(235, 18%, 26%);
-}
-
+<style scoped>
 button {
-  background-color: hsl(234, 29%, 20%);
+  transition: background-color 1s ease-in-out;
 }
 
 button:hover {
-  background-image: linear-gradient(45deg, hsl(4, 100%, 67%), hsl(0, 0%, 100%));
-  transition: background-image 0.5s ease;
+  background: rgb(255, 84, 116);
+  background: linear-gradient(45deg, rgba(255, 84, 116, 1) 0%, rgba(255, 103, 64, 1) 44%);
 }
 </style>
