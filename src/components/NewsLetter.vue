@@ -36,21 +36,29 @@ const goToNextStep = () => {
   }
 }
 
+const refreshPage =()=>{
+  location.reload();
+}
+
 
 </script>
 <template>
   <div v-if="!nextStep"
-    class="w-[58.375rem] h-[40.063rem] flex flex-row-reverse items-center justify-around p-6 bg-white gap-x-16  rounded-[40px] max-md:h-screen md:w-full max-md:flex-col">
+    class="w-[58.375rem] h-[40.063rem] flex flex-row-reverse items-center 
+    justify-around
+     p-6 bg-white gap-x-16  rounded-[40px] max-sm:h-screen max-sm:w-screen max-sm:flex-col max-sm:p-0 max-sm:gap-x-0
+      max-sm:justify-start max-sm:items-center
+     ">
 
-    <picture>
+    <picture class=" max-sm:mx-auto">
       <source srcset="/src/assets/illustration-sign-up-mobile.svg" media="(max-width: 600px)" />
-      <img src="/src/assets/illustration-sign-up-desktop.svg" alt="MDN" />
+      <img class=" max-sm:w-screen max-sm:p-0" src="/src/assets/illustration-sign-up-desktop.svg" alt="MDN" />
     </picture>
 
 
 
-    <div class=" p-5 inline-flex flex-col justify-around items-start">
-      <h1 class=" text-6xl text-gray-1000 font-roboto font-bold my-1 tracking-normal">Stay updated!</h1>
+    <div class=" p-5 inline-flex flex-col justify-around items-start max-sm:mx-auto max-sm:w-screen">
+      <h1 class=" text-6xl max-sm:text-4xl text-gray-1000 font-roboto font-bold my-1 tracking-normal">Stay updated!</h1>
       <p class="-tracking-tight my-2 font-roboto text-base line-clamp-2 font-normal">
         Join 60,000+ product managers receiving monthly updates on:
       </p>
@@ -75,7 +83,7 @@ const goToNextStep = () => {
             </div>
           </label>
           <input type="email" name="email" id="email" placeholder="email@company.com" @submit.prevent
-            class="bg-white indent-2 text-gray-970 h-12 w-full outline-none font-roboto rounded-lg p-0 border-gray-970  focus:border-black focus:outline-black"
+            class="bg-white indent-2 text-gray-970 h-12 w-full outline-none font-roboto rounded-lg p-0 border border-gray-970  focus:border-black focus:outline-black"
             :class="isValid ? 'bg-white' : ' border-red-tomato bg-red-tomato/25  focus:outline-red-tomato text-red-tomato'"
             @input="validateEmail(text)" v-model="text" />
         </div>
@@ -91,24 +99,24 @@ const goToNextStep = () => {
 
 
   <div v-if="nextStep"
-    class="flex justify-center items-center bg-white p-10 card lg:flex lg:justify-center lg:items-center">
-    <div class="container flex flex-col justify-around h-full">
-      <div class=" sm:mt-24 flex-grow">
+    class=" w-[32.75rem] h-[32.75rem] rounded-xl flex justify-center items-center bg-white p-10 card lg:flex lg:justify-center lg:items-center max-sm:h-screen">
+    <div class=" flex flex-col justify-around h-full items-center">
+      <div class=" max-sm:mt-24 flex-grow flex flex-col justify-center items-start">
         <img src="/src/assets/icon-success.svg" alt="success icon" class="my-2" />
-        <h1 class="my-5 text-4xl leading-none font-extrabold">
+        <h1 class="my-5 text-4xl leading-none font-extrabold font-roboto">
           Thanks for subscribing!
         </h1>
-        <p>
+        <p class=" font-roboto">
           A confirmation email has been sent to
-          <span class="font-extrabold">{{ emailVal }}</span>. Please open it
+          <span class="font-extrabold">{{ text }}</span>. Please open it
           and click the button inside to confirm your subscription.
         </p>
       </div>
-      <div>
-        <button id="dis" class="text-white text-center w-full py-2 px-2 rounded-lg my-2" @click="isValid = !isValid">
+    
+        <button id="dis" class=" w-full h-14 bg-gray-1000 flex items-center justify-center text-white font-roboto font-bold rounded-lg mt-2 hover:bg" @click="refreshPage">
           Dismiss message
         </button>
-      </div>
+      
     </div>
   </div>
 </template>
